@@ -1,11 +1,11 @@
 # ATS Resume Builder
 
-A clean ATS-focused GitHub Pages resume builder with single-template style upload.
+A single-template ATS resume builder for GitHub Pages.
 
-## What it does
-- Keeps the user's original resume wording.
-- Accepts one `.docx` or `.pdf` template file and applies inferred style profile (font/size/spacing) to preview.
-- Uses ATS-safe structure for output preview.
+## Features
+- Clean two-panel design for content input and live ATS preview.
+- Upload one `.docx` or `.pdf` document and apply inferred template style to preview.
+- Keep original user wording while applying style profile (font/size/spacing).
 - Includes provided ATS source snippets:
   - `templates/ats-html/ats-template.html`
   - `templates/ats-css/ats-template.css`

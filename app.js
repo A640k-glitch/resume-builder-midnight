@@ -42,57 +42,127 @@ function renderResume() {
   const phone = document.getElementById("phone").value || "(000) 000-0000";
   const location = document.getElementById("location").value || "City, Country";
   const summary = document.getElementById("summary").value || "Add your professional summary.";
-  const bullets = splitBullets(document.getElementById("bullets").value);
+  const skills = splitLines(document.getElementById("skills").value);
+  const bullets = splitLines(document.getElementById("bullets").value);
 
-  resumePreview.className = `resume-preview ${selectedTemplate}`;
   resumePreview.innerHTML = `
-    <header class="resume-header">
-      <h4 class="resume-name">${name}</h4>
-      <p class="resume-title">${title}</p>
-      <p class="resume-contact">${email} · ${phone} · ${location}</p>
+    <header class="ats-header">
+      <h1>${name}</h1>
+      <p>${phone} | ${email} | ${location}</p>
     </header>
-    <p class="resume-summary">${summary}</p>
-    <ul class="resume-bullets">
-      ${
-        bullets.length
-          ? bullets.map((bullet) => `<li>${bullet}</li>`).join("")
-          : "<li>Add achievement bullets to preview your experience.</li>"
-      }
-    </ul>
+
+    <section>
+      <h2 class="ats-section-title">PROFESSIONAL SUMMARY</h2>
+      <p>${summary}</p>
+    </section>
+
+    <section>
+      <h2 class="ats-section-title">CORE SKILLS</h2>
+      <p>${skills.length ? skills.join(" · ") : "Add your skills."}</p>
+    </section>
+
+    <section>
+      <h2 class="ats-section-title">WORK EXPERIENCE</h2>
+      <div class="exp-item">
+        <div class="exp-header">
+          <strong>${title}</strong>
+          <span>Recent</span>
+        </div>
+        <ul>
+          ${bullets.length ? bullets.map((b) => `<li>${b}</li>`).join("") : "<li>Add experience bullet points.</li>"}
+        </ul>
+      </div>
+    </section>
   `;
+
+  applyStyleProfile();
 }
+
+async function extractDocxStyle(arrayBuffer) {
+  if (!window.mammoth) {
+    throw new Error("Mammoth library is not loaded yet.");
+  }
+
+  const result = await window.mammoth.convertToHtml({ arrayBuffer });
+  const parser = new DOMParser();
+  const htmlDoc = parser.parseFromString(result.value, "text/html");
+  const firstHeading = htmlDoc.querySelector("h1, h2, h3, p");
+
+  if (firstHeading) {
+    const inlineStyle = firstHeading.getAttribute("style") || "";
+    const fontMatch = inlineStyle.match(/font-family\s*:\s*([^;]+)/i);
+    const sizeMatch = inlineStyle.match(/font-size\s*:\s*([^;]+)/i);
+    const lineMatch = inlineStyle.match(/line-height\s*:\s*([^;]+)/i);
+    if (fontMatch) templateStyle.fontFamily = fontMatch[1].trim();
+    if (sizeMatch) templateStyle.fontSize = sizeMatch[1].trim();
+    if (lineMatch) templateStyle.lineHeight = lineMatch[1].trim();
+  }
+
+  uploadStatus.textContent = "DOCX template processed. Style profile applied to your content.";
+}
+
+async function extractPdfStyle(arrayBuffer) {
+  const pdfjsLib = await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs");
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.mjs";
+
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const page = await pdf.getPage(1);
+  const textContent = await page.getTextContent();
+  const firstItem = textContent.items.find((item) => item.str && item.str.trim().length);
+
+  if (firstItem) {
+    const size = Math.abs(firstItem.transform[0] || 12);
+    templateStyle.fontSize = `${Math.max(10, Math.min(16, Math.round(size)))}pt`;
+    templateStyle.lineHeight = "1.45";
+  }
+
+  uploadStatus.textContent = "PDF template processed. Inferred style profile applied to your content.";
+}
+
+templateUpload.addEventListener("change", async (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  uploadStatus.textContent = "Reading template document...";
+
+  try {
+    const ext = file.name.toLowerCase();
+    const arrayBuffer = await file.arrayBuffer();
+
+    if (ext.endsWith(".docx")) {
+      await extractDocxStyle(arrayBuffer);
+    } else if (ext.endsWith(".pdf")) {
+      await extractPdfStyle(arrayBuffer);
+    } else {
+      uploadStatus.textContent = "Unsupported file type. Please upload .docx or .pdf.";
+      return;
+    }
+
+    renderResume();
+  } catch (error) {
+    uploadStatus.textContent = `Could not extract style from template: ${error.message}`;
+  }
+});
 
 resumeForm.addEventListener("submit", (event) => {
   event.preventDefault();
   renderResume();
 });
 
-templateList.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-template-id]");
-  if (!button) return;
-  selectedTemplate = button.dataset.templateId;
-  createTemplateButtons();
-  renderResume();
-});
-
 optimizeBtn.addEventListener("click", () => {
-  const bulletsField = document.getElementById("bullets");
-  const rawBullets = splitBullets(bulletsField.value);
-
-  if (!rawBullets.length) {
-    bulletsField.value = "Led a cross-functional initiative that improved user retention by 18%.";
-  } else {
-    bulletsField.value = rawBullets.map(improveBullet).join("\n");
-  }
-
   const summaryField = document.getElementById("summary");
-  if (summaryField.value.trim().length < 50) {
+  if (summaryField.value.trim().length < 60) {
     summaryField.value =
-      "Strategic and execution-focused professional with a track record of delivering measurable business impact through cross-functional leadership, process improvement, and user-centered decision making.";
+      "Analytically driven and results-oriented professional with proven success in data-backed decision making, communication, and cross-functional execution.";
   }
+
+  const bulletsField = document.getElementById("bullets");
+  const bullets = splitLines(bulletsField.value);
+  bulletsField.value = bullets.length
+    ? bullets.map(improveBullet).join("\n")
+    : "Led a customer success initiative that improved retention by 18%.";
 
   renderResume();
 });
 
-createTemplateButtons();
 renderResume();

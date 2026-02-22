@@ -1,59 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Resume Builder</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-</head>
-<body>
-    <header>
-        <h1>NextGen <span>Resume Builder</span></h1>
-        <p>Upload your current CV and transform it into a modern template.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Resume Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <p class="kicker">Single Template ATS Builder</p>
+        <h1>ATS Resume Builder</h1>
+        <p class="lead">Upload one Word/PDF template style and keep your own resume wording unchanged.</p>
+      </div>
     </header>
 
-    <main class="container">
-        <section class="editor">
-            <h2>Your Details</h2>
-            
-            <div class="input-group upload-group">
-                <label for="cvUpload">Upload Current CV (.txt)</label>
-                <input type="file" id="cvUpload" accept=".txt">
-            </div>
-            
-            <div class="input-group">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" placeholder="e.g., Alex Carter">
-            </div>
-            
-            <div class="input-group">
-                <label for="jobTitle">Target Job Title</label>
-                <input type="text" id="jobTitle" placeholder="e.g., Full Stack Developer">
-            </div>
-            
-            <div class="input-group">
-                <label for="summary">Professional Summary</label>
-                <textarea id="summary" rows="5" placeholder="Write a brief summary..."></textarea>
-            </div>
-            
-            <button id="downloadPdfBtn" class="action-btn">
-                📄 Download as PDF
-            </button>
-        </section>
+    <main class="container layout">
+      <section class="card form-card">
+        <div class="card-head">
+          <h2>Resume Content</h2>
+          <p>Fill details once, then refresh preview anytime.</p>
+        </div>
 
-        <section class="preview-panel">
-            <h2>Live Preview</h2>
-            <div id="resumePreview" class="resume-preview">
-                <h1 id="prevName">Your Name</h1>
-                <h3 id="prevTitle">Your Title</h3>
-                <div class="divider"></div>
-                <p id="prevSummary">Your professional summary will appear here.</p>
-            </div>
-        </section>
+        <form id="resumeForm">
+          <div class="field-grid">
+            <label>Full name <input type="text" id="name" placeholder="Jordan Lee" required /></label>
+            <label>Role title <input type="text" id="title" placeholder="Business Analyst" required /></label>
+          </div>
+
+          <label>Email <input type="email" id="email" placeholder="jordan@email.com" required /></label>
+
+          <div class="field-grid">
+            <label>Phone <input type="text" id="phone" placeholder="+1 (555) 010-2026" /></label>
+            <label>Location <input type="text" id="location" placeholder="Johannesburg, South Africa" /></label>
+          </div>
+
+          <label>Summary <textarea id="summary" rows="4" placeholder="Write your professional summary"></textarea></label>
+          <label>Core skills (one per line)<textarea id="skills" rows="4" placeholder="Microsoft Excel&#10;Customer Relationship Management"></textarea></label>
+          <label>Experience bullets (one per line)<textarea id="bullets" rows="6" placeholder="Managed customer retention portfolio&#10;Built weekly dashboard reports"></textarea></label>
+
+          <div class="button-row">
+            <button type="button" id="optimizeBtn" class="btn btn-secondary">AI Optimize</button>
+            <button type="submit" class="btn btn-primary">Update Preview</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card preview-card">
+        <div class="card-head">
+          <h2>Template Upload</h2>
+          <p>Single template mode (.docx or .pdf).</p>
+        </div>
+
+        <label class="upload-control">
+          <span>Upload template document</span>
+          <input type="file" id="templateUpload" accept=".docx,.pdf" />
+        </label>
+
+        <p id="uploadStatus" class="status">No template uploaded yet. Using built-in ATS style.</p>
+
+        <h3>ATS Preview</h3>
+        <div id="resumePreview" class="resume-preview ats-container"></div>
+      </section>
     </main>
 
-    <script src="script.js"></script>
-</body>
+    <script src="app.js" type="module"></script>
+  </body>
 </html>

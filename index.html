@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Midnight Resume AI Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-gradient"></div>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">GitHub Pages Ready</p>
+        <h1>Midnight Resume Builder</h1>
+        <p>
+          Build a polished resume in minutes, optimize every bullet with AI, and choose from five
+          professional templates inspired by modern hiring standards.
+        </p>
+      </header>
+
+      <section class="grid two-col">
+        <article class="panel">
+          <h2>1) Add Your Details</h2>
+          <form id="resume-form">
+            <label>Full Name <input name="name" placeholder="Avery Morgan" required /></label>
+            <label>Professional Title <input name="title" placeholder="Senior Product Designer" required /></label>
+            <label>Email <input name="email" type="email" placeholder="avery@email.com" required /></label>
+            <label>Phone <input name="phone" placeholder="+1 555 010 2233" required /></label>
+            <label>Location <input name="location" placeholder="Toronto, Canada" required /></label>
+            <label>Professional Summary
+              <textarea name="summary" rows="4" placeholder="Impact-focused summary..."></textarea>
+            </label>
+            <label>Experience (one bullet per line)
+              <textarea name="experience" rows="6" placeholder="Led redesign that improved conversion by 32%\nMentored 4 designers across product pods"></textarea>
+            </label>
+            <label>Skills (comma-separated)
+              <input name="skills" placeholder="Figma, Product Strategy, A/B Testing, Design Systems" />
+            </label>
+            <div class="row">
+              <button type="button" id="optimize-btn" class="btn accent">Optimize with AI</button>
+              <button type="submit" class="btn">Update Preview</button>
+            </div>
+          </form>
+
+          <div class="ai-box">
+            <h3>Bring your own AI key (optional)</h3>
+            <p>
+              Use OpenRouter or OpenAI-compatible APIs directly in your browser for smarter rewrites.
+              Without a key, the app uses built-in AI-style optimization.
+            </p>
+            <input id="ai-key" type="password" placeholder="Paste API key (optional)" />
+            <input id="ai-endpoint" placeholder="API endpoint (default: OpenRouter chat completions)" />
+            <small>Your key is never stored server-side.</small>
+          </div>
+        </article>
+
+        <article class="panel preview-panel">
+          <h2>2) Live Resume Preview</h2>
+          <div id="resume-preview" class="template executive"></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="templates-head">
+          <h2>3) Choose a Professional Template</h2>
+          <p>Each template includes an online reference you can inspect for style inspiration.</p>
+        </div>
+        <div id="template-gallery" class="template-gallery"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

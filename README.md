@@ -1,17 +1,14 @@
-# Midnight Resume AI Builder
+# ATS Resume Builder
 
-A modern, deep-black resume builder designed for GitHub Pages.
+Single-template ATS resume builder for GitHub Pages.
 
 ## Features
-- 5 professional template options inspired by popular online resume services:
-  - Novorésumé
-  - Canva
-  - Enhancv
-  - Resume.io
-  - Adobe Express
-- Live resume preview
-- Client-side "AI Optimize" for stronger, achievement-focused bullet points
-- Zero backend required
+- One ATS template flow (no multi-template design picker).
+- Upload `.docx` or `.pdf` template to extract style cues.
+- Keeps the user's resume text unchanged while applying inferred style profile.
+- Includes provided ATS template assets:
+  - `templates/ats-html/ats-template.html`
+  - `templates/ats-css/ats-template.css`
 
 ## Run locally
 ```bash

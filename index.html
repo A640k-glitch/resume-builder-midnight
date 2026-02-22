@@ -42,6 +42,7 @@
           <label>Summary <textarea id="summary" rows="4" placeholder="Write your professional summary"></textarea></label>
           <label>Core skills (one per line)<textarea id="skills" rows="4" placeholder="Microsoft Excel&#10;Customer Relationship Management"></textarea></label>
           <label>Experience bullets (one per line)<textarea id="bullets" rows="6" placeholder="Managed customer retention portfolio&#10;Built weekly dashboard reports"></textarea></label>
+          <label>Education (one per line)<textarea id="education" rows="4" placeholder="BSc Financial Information Systems | Vaal University of Technology | 2026"></textarea></label>
 
           <div class="button-row">
             <button type="button" id="optimizeBtn" class="btn btn-secondary">AI Optimize</button>
@@ -63,7 +64,10 @@
 
         <p id="uploadStatus" class="status">No template uploaded yet. Using built-in ATS style.</p>
 
-        <h3>ATS Preview</h3>
+        <div class="preview-head">
+          <h3>ATS Preview</h3>
+          <button type="button" id="downloadBtn" class="btn btn-primary">Download Resume</button>
+        </div>
         <div id="resumePreview" class="resume-preview ats-container"></div>
       </section>
     </main>

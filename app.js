@@ -1,5 +1,6 @@
 const resumeForm = document.getElementById("resumeForm");
 const optimizeBtn = document.getElementById("optimizeBtn");
+const downloadBtn = document.getElementById("downloadBtn");
 const resumePreview = document.getElementById("resumePreview");
 const templateUpload = document.getElementById("templateUpload");
 const uploadStatus = document.getElementById("uploadStatus");
@@ -44,6 +45,7 @@ function renderResume() {
   const summary = document.getElementById("summary").value || "Add your professional summary.";
   const skills = splitLines(document.getElementById("skills").value);
   const bullets = splitLines(document.getElementById("bullets").value);
+  const education = splitLines(document.getElementById("education").value);
 
   resumePreview.innerHTML = `
     <header class="ats-header">
@@ -73,9 +75,51 @@ function renderResume() {
         </ul>
       </div>
     </section>
+
+    <section>
+      <h2 class="ats-section-title">EDUCATION</h2>
+      <ul>
+        ${education.length ? education.map((item) => `<li>${item}</li>`).join("") : "<li>Add education details.</li>"}
+      </ul>
+    </section>
   `;
 
   applyStyleProfile();
+}
+
+function downloadResume() {
+  const name = (document.getElementById("name").value || "resume").trim().toLowerCase().replace(/\s+/g, "-");
+  const filename = `${name}-ats-resume.doc`;
+  const docContent = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office' 
+      xmlns:w='urn:schemas-microsoft-com:office:word' 
+      xmlns='http://www.w3.org/TR/REC-html40'>
+  <head>
+    <meta charset="utf-8" />
+    <title>ATS Resume</title>
+    <style>
+      body { font-family: ${templateStyle.fontFamily}; font-size: ${templateStyle.fontSize}; line-height: ${templateStyle.lineHeight}; }
+      .ats-container { background: #fff; color: #000; padding: 40px; max-width: 800px; margin: auto; }
+      .ats-header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+      .ats-header h1 { margin: 0; font-size: 24pt; text-transform: uppercase; }
+      .ats-section-title { font-size: 14pt; border-bottom: 1px solid #ccc; margin-top: ${templateStyle.sectionSpacing}; margin-bottom: 10px; color: #333; }
+      .exp-header { display: flex; justify-content: space-between; margin-top: 10px; }
+      ul { margin-top: 5px; padding-left: 20px; }
+      li { margin-bottom: 5px; }
+    </style>
+  </head>
+  <body>${resumePreview.outerHTML}</body>
+</html>`;
+
+  const blob = new Blob([docContent], { type: "application/msword" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
 async function extractDocxStyle(arrayBuffer) {
@@ -163,6 +207,11 @@ optimizeBtn.addEventListener("click", () => {
     : "Led a customer success initiative that improved retention by 18%.";
 
   renderResume();
+});
+
+downloadBtn.addEventListener("click", () => {
+  renderResume();
+  downloadResume();
 });
 
 renderResume();

@@ -14,4 +14,10 @@ Single-template ATS resume builder for GitHub Pages.
 ```bash
 python3 -m http.server 4173
 ```
-Open `http://localhost:4173`.
+Then open `http://localhost:4173`.
+
+## Deploy to GitHub Pages
+1. Push this repository to GitHub.
+2. Open **Settings → Pages**.
+3. Select the deployment source for the default branch root.
+4. Save and wait for publish.

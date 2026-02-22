@@ -3,34 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ATS Resume Builder</title>
-    <link rel="stylesheet" href="styles.css?v=3" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js" defer></script>
+    <title>Midnight Resume AI Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="shell hero">
-      <h1>ATS Resume Builder</h1>
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+
+    <header class="hero shell">
+      <p class="eyebrow">GitHub Pages Ready</p>
+      <h1>Midnight Resume AI Builder</h1>
       <p class="subtitle">
-        Upload one Word/PDF template to copy style cues (font, spacing, sizing) while keeping your exact resume words.
+        Build a polished resume in minutes. Pick from 5 modern templates inspired by
+        top professional formats and let AI optimize your bullet points.
       </p>
     </header>
 
-    <main class="shell layout">
-      <section class="card">
-        <h2>Your Resume Content</h2>
+    <main class="shell grid-layout">
+      <section class="panel form-panel">
+        <h2>Your Details</h2>
         <form id="resumeForm">
-          <label>Full name <input type="text" id="name" placeholder="Jordan Lee" required /></label>
-          <label>Role title <input type="text" id="title" placeholder="Business Analyst" required /></label>
-          <label>Email <input type="email" id="email" placeholder="jordan@email.com" required /></label>
-          <label>Phone <input type="text" id="phone" placeholder="+1 (555) 010-2026" /></label>
-          <label>Location <input type="text" id="location" placeholder="Johannesburg, South Africa" /></label>
-          <label>Summary <textarea id="summary" rows="4" placeholder="Write your professional summary"></textarea></label>
-          <label>Core skills (one per line)<textarea id="skills" rows="4" placeholder="Microsoft Excel\nCustomer Relationship Management"></textarea></label>
-          <label>Experience bullets (one per line)<textarea id="bullets" rows="6" placeholder="Managed customer retention portfolio\nBuilt weekly dashboard reports"></textarea></label>
+          <label>
+            Full name
+            <input type="text" id="name" placeholder="Jordan Lee" required />
+          </label>
+          <label>
+            Role title
+            <input type="text" id="title" placeholder="Senior Product Designer" required />
+          </label>
+          <label>
+            Email
+            <input type="email" id="email" placeholder="jordan@email.com" required />
+          </label>
+          <label>
+            Phone
+            <input type="text" id="phone" placeholder="+1 (555) 010-2026" />
+          </label>
+          <label>
+            Location
+            <input type="text" id="location" placeholder="New York, NY" />
+          </label>
+          <label>
+            Summary
+            <textarea id="summary" rows="4" placeholder="Write a 2-3 line professional summary"></textarea>
+          </label>
+          <label>
+            Experience bullets (one per line)
+            <textarea
+              id="bullets"
+              rows="8"
+              placeholder="Led redesign of onboarding flow\nManaged 5-person design team"
+            ></textarea>
+          </label>
 
-          <div class="actions">
-            <button type="button" id="optimizeBtn" class="btn">AI Optimize</button>
-            <button type="submit" class="btn btn-primary">Update Preview</button>
+          <div class="button-row">
+            <button type="button" id="optimizeBtn" class="btn btn-glow">AI Optimize</button>
+            <button type="submit" class="btn">Update Preview</button>
           </div>
         </form>
       </section>
@@ -47,10 +81,28 @@
         <article class="preview-wrap">
           <h3>ATS Preview</h3>
           <div id="resumePreview" class="resume-preview ats-container"></div>
+      <section class="panel">
+        <div class="template-head">
+          <h2>Choose a Template</h2>
+          <p>5 professional styles inspired by popular online resume layouts.</p>
+        </div>
+
+        <div id="templateList" class="template-list"></div>
+
+        <article class="resume-preview-wrap">
+          <h3>Live Preview</h3>
+          <div id="resumePreview" class="resume-preview"></div>
         </article>
       </section>
     </main>
 
     <script src="app.js?v=3" type="module"></script>
+    <footer class="shell footer">
+      <p>
+        Built for GitHub Pages. No backend required. AI optimization runs client-side.
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
   </body>
 </html>

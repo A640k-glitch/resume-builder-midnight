@@ -1,95 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Midnight Resume AI Builder</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="ambient ambient-a"></div>
-    <div class="ambient ambient-b"></div>
-
-    <header class="hero shell">
-      <p class="eyebrow">GitHub Pages Ready</p>
-      <h1>Midnight Resume AI Builder</h1>
-      <p class="subtitle">
-        Build a polished resume in minutes. Pick from 5 modern templates inspired by
-        top professional formats and let AI optimize your bullet points.
-      </p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Resume Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>NextGen <span>Resume Builder</span></h1>
+        <p>Upload your current CV and transform it into a modern template.</p>
     </header>
 
-    <main class="shell grid-layout">
-      <section class="panel form-panel">
-        <h2>Your Details</h2>
-        <form id="resumeForm">
-          <label>
-            Full name
-            <input type="text" id="name" placeholder="Jordan Lee" required />
-          </label>
-          <label>
-            Role title
-            <input type="text" id="title" placeholder="Senior Product Designer" required />
-          </label>
-          <label>
-            Email
-            <input type="email" id="email" placeholder="jordan@email.com" required />
-          </label>
-          <label>
-            Phone
-            <input type="text" id="phone" placeholder="+1 (555) 010-2026" />
-          </label>
-          <label>
-            Location
-            <input type="text" id="location" placeholder="New York, NY" />
-          </label>
-          <label>
-            Summary
-            <textarea id="summary" rows="4" placeholder="Write a 2-3 line professional summary"></textarea>
-          </label>
-          <label>
-            Experience bullets (one per line)
-            <textarea
-              id="bullets"
-              rows="8"
-              placeholder="Led redesign of onboarding flow\nManaged 5-person design team"
-            ></textarea>
-          </label>
+    <main class="container">
+        <section class="editor">
+            <h2>Your Details</h2>
+            
+            <div class="input-group upload-group">
+                <label for="cvUpload">Upload Current CV (.txt)</label>
+                <input type="file" id="cvUpload" accept=".txt">
+            </div>
+            
+            <div class="input-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="e.g., Alex Carter">
+            </div>
+            
+            <div class="input-group">
+                <label for="jobTitle">Target Job Title</label>
+                <input type="text" id="jobTitle" placeholder="e.g., Full Stack Developer">
+            </div>
+            
+            <div class="input-group">
+                <label for="summary">Professional Summary</label>
+                <textarea id="summary" rows="5" placeholder="Write a brief summary..."></textarea>
+            </div>
+            
+            <button id="downloadPdfBtn" class="action-btn">
+                📄 Download as PDF
+            </button>
+        </section>
 
-          <div class="button-row">
-            <button type="button" id="optimizeBtn" class="btn btn-glow">AI Optimize</button>
-            <button type="submit" class="btn">Update Preview</button>
-          </div>
-        </form>
-      </section>
-
-      <section class="panel">
-        <div class="template-head">
-          <h2>Choose a Template</h2>
-          <p>5 professional styles inspired by popular online resume layouts.</p>
-        </div>
-
-        <div id="templateList" class="template-list"></div>
-
-        <article class="resume-preview-wrap">
-          <h3>Live Preview</h3>
-          <div id="resumePreview" class="resume-preview"></div>
-        </article>
-      </section>
+        <section class="preview-panel">
+            <h2>Live Preview</h2>
+            <div id="resumePreview" class="resume-preview">
+                <h1 id="prevName">Your Name</h1>
+                <h3 id="prevTitle">Your Title</h3>
+                <div class="divider"></div>
+                <p id="prevSummary">Your professional summary will appear here.</p>
+            </div>
+        </section>
     </main>
 
-    <footer class="shell footer">
-      <p>
-        Built for GitHub Pages. No backend required. AI optimization runs client-side.
-      </p>
-    </footer>
-
-    <script src="app.js"></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>

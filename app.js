@@ -1,52 +1,17 @@
-const templates = [
-  {
-    id: "template-atlantic",
-    name: "Atlantic Minimal",
-    source: "Inspired by Novorésumé clean layouts",
-  },
-  {
-    id: "template-onyx",
-    name: "Onyx Executive",
-    source: "Inspired by Canva executive templates",
-  },
-  {
-    id: "template-zenith",
-    name: "Zenith Modern",
-    source: "Inspired by Enhancv modern resumes",
-  },
-  {
-    id: "template-slate",
-    name: "Slate Sidebar",
-    source: "Inspired by Resume.io two-column format",
-  },
-  {
-    id: "template-noir",
-    name: "Noir Professional",
-    source: "Inspired by Adobe Express resume styles",
-  },
-];
-
-const templateList = document.getElementById("templateList");
-const resumePreview = document.getElementById("resumePreview");
 const resumeForm = document.getElementById("resumeForm");
 const optimizeBtn = document.getElementById("optimizeBtn");
+const resumePreview = document.getElementById("resumePreview");
+const templateUpload = document.getElementById("templateUpload");
+const uploadStatus = document.getElementById("uploadStatus");
 
-let selectedTemplate = templates[0].id;
+const templateStyle = {
+  fontFamily: "Arial, Helvetica, sans-serif",
+  fontSize: "12pt",
+  lineHeight: "1.5",
+  sectionSpacing: "20px",
+};
 
-function createTemplateButtons() {
-  templateList.innerHTML = templates
-    .map(
-      (template) => `
-      <button type="button" class="template ${template.id === selectedTemplate ? "active" : ""}" data-template-id="${template.id}">
-        <strong>${template.name}</strong>
-        <p>${template.source}</p>
-      </button>
-    `,
-    )
-    .join("");
-}
-
-function splitBullets(value) {
+function splitLines(value) {
   return value
     .split("\n")
     .map((line) => line.trim())
@@ -54,21 +19,20 @@ function splitBullets(value) {
 }
 
 function improveBullet(line) {
-  const starters = ["Led", "Delivered", "Built", "Improved", "Optimized", "Launched"];
-  const hasStrongVerb = starters.some((verb) => line.toLowerCase().startsWith(verb.toLowerCase()));
   const normalized = line.replace(/\.$/, "");
+  const hasVerb = /^(Led|Built|Improved|Managed|Delivered|Launched|Optimized)/i.test(normalized);
+  let improved = hasVerb ? normalized : `Led ${normalized.charAt(0).toLowerCase()}${normalized.slice(1)}`;
+  if (!/\d/.test(improved)) improved += " resulting in measurable impact";
+  return `${improved}.`;
+}
 
-  let improved = hasStrongVerb ? normalized : `Led ${normalized.charAt(0).toLowerCase()}${normalized.slice(1)}`;
-
-  if (!/\d/.test(improved)) {
-    improved += " resulting in measurable performance gains";
-  }
-
-  if (!improved.endsWith(".")) {
-    improved += ".";
-  }
-
-  return improved.charAt(0).toUpperCase() + improved.slice(1);
+function applyStyleProfile() {
+  resumePreview.style.fontFamily = templateStyle.fontFamily;
+  resumePreview.style.fontSize = templateStyle.fontSize;
+  resumePreview.style.lineHeight = templateStyle.lineHeight;
+  document.querySelectorAll(".ats-section-title").forEach((el) => {
+    el.style.marginTop = templateStyle.sectionSpacing;
+  });
 }
 
 function renderResume() {

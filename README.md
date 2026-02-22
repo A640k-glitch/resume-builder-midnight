@@ -1,26 +1,22 @@
-# Midnight Resume AI Builder
+# ATS Resume Builder
 
-A modern, deep-black resume builder designed for GitHub Pages.
+A clean ATS-focused GitHub Pages resume builder with single-template style upload.
 
-## Features
-- 5 professional template options inspired by popular online resume services:
-  - Novorésumé
-  - Canva
-  - Enhancv
-  - Resume.io
-  - Adobe Express
-- Live resume preview
-- Client-side "AI Optimize" for stronger, achievement-focused bullet points
-- Zero backend required
+## What it does
+- Keeps the user's original resume wording.
+- Accepts one `.docx` or `.pdf` template file and applies inferred style profile (font/size/spacing) to preview.
+- Uses ATS-safe structure for output preview.
+- Includes provided ATS source snippets:
+  - `templates/ats-html/ats-template.html`
+  - `templates/ats-css/ats-template.css`
 
 ## Run locally
 ```bash
 python3 -m http.server 4173
 ```
-Then open `http://localhost:4173`.
+Open `http://localhost:4173`.
 
 ## Deploy to GitHub Pages
-1. Push this repository to GitHub.
-2. Open **Settings → Pages**.
-3. Select the deployment source for the default branch root.
-4. Save and wait for publish.
+1. Push branch to GitHub.
+2. Go to **Settings → Pages**.
+3. Select default branch root and save.
